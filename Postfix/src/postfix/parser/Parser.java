@@ -76,7 +76,9 @@ public class Parser {
 		return new Expr.Binop(left, right, this.peek());
 	}
 
-	private Expr id() { return new Expr.Id(peek().lexeme); }
+	private Expr id() {
+		return new Expr.Id(peek().lexeme);
+	}
 
 	private boolean match(TokenType... types) {
 		for (TokenType type : types) {
