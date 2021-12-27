@@ -58,6 +58,8 @@ public class Parser {
 			else if(this.match(TokenType.PLUS, TokenType.MINUS, 
 					TokenType.SLASH, TokenType.STAR)) {
 				this.stack.push(this.binop());
+			} else if (this.match(TokenType.ID)) {
+				this.stack.push(this.id());
 			}
 			this.advance();
 		}
@@ -69,8 +71,12 @@ public class Parser {
 	}
 
 	private Expr binop() {
-		return new Expr.Binop(this.stack.pop(), this.stack.pop(), this.peek());
+		Expr right = this.stack.pop();
+		Expr left = this.stack.pop();
+		return new Expr.Binop(left, right, this.peek());
 	}
+
+	private Expr id() { return new Expr.Id(peek().lexeme); }
 
 	private boolean match(TokenType... types) {
 		for (TokenType type : types) {
